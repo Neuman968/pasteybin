@@ -1,0 +1,17 @@
+import java.time.Instant;
+
+CREATE TABLE bin (
+    id TEXT NOT NULL PRIMARY KEY,
+    content TEXT NOT NULL,
+    createdTime INTEGER AS Instant NOT NULL,
+    lastUpdated INTEGER AS Instant NOT NULL
+);
+
+insert:
+INSERT INTO bin(id, content, createdTime, lastUpdated) VALUES ?;
+
+update:
+UPDATE bin SET content = ?, lastUpdated = ? WHERE id = ?;
+
+selectAll:
+SELECT * FROM bin ORDER BY lastUpdated DESC;
