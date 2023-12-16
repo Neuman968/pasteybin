@@ -56,8 +56,6 @@ fun Application.configureRouting() {
                     call.respond(binService.newBin(call.parameters["id"].toString()))
                 }
                 webSocket("/ws") {
-
-                    println("Adding user!")
                     val binPathId = call.parameters["id"].toString()
                     val session = this
                     connections[binPathId] = (connections[binPathId] ?: mutableSetOf()).apply { add(session) }
@@ -74,26 +72,9 @@ fun Application.configureRouting() {
                     } catch (e: Exception) {
                         println(e.localizedMessage)
                     } finally {
-//                        connections.remove(this)
-//                        println("Removing $thisConnection!")
-//                        connections -= thisConnection
+                        connections[binPathId]?.remove(this)
                     }
-
                 }
-//                    webSocketService.addConnection(this)
-//                    println("onConnect")
-                // NOTE: the below keep the connection alive, otherwise it will close automatically
-//                    try {
-//                        for (frame in incoming) {
-//                            val text = (frame as Frame.Text).readText()
-//                            println("onMessage $text")
-//                            outgoing.send(Frame.Text(text))
-//                        }
-//                    } catch (e: ClosedReceiveChannelException) {
-//                        logger.error("Closed Channel: ", e)
-//                    } catch (e: Throwable) {
-//                        logger.error("Generic Error: ", e)
-//                    }
             }
         }
     }
