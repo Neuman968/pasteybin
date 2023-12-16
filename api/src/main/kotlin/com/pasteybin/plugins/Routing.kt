@@ -70,7 +70,7 @@ fun Application.configureRouting() {
                             }
                         }
                     } catch (e: Exception) {
-                        println(e.localizedMessage)
+                        logger.error(e.localizedMessage)
                     } finally {
                         connections[binPathId]?.remove(this)
                     }
