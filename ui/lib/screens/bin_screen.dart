@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ui/widgets/content_text_field.dart';
 
-class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
+class BinScreen extends StatelessWidget {
+  const BinScreen({super.key, required this.binId});
+
+  final String binId;
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +21,15 @@ class MainScreen extends StatelessWidget {
         children: [
           const ContentTextField(),
           // Scrollabl
-          ListView.builder(itemCount: 2, itemBuilder: (context, idx) {
-            return Card(child: Text('Title $idx'),);
-            // 
-            // return const Text('Item idx', style: TextStyle(color: Colors.white),);
-          })
+          ListView.builder(
+              itemCount: 2,
+              itemBuilder: (context, idx) {
+                return Card(
+                  child: Text('Title $idx'),
+                );
+                //
+                // return const Text('Item idx', style: TextStyle(color: Colors.white),);
+              })
           // ElevatedButton(onPressed: () {}, child: const ContentTextField())
         ],
       ),

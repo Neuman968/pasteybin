@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ui/screens/main_screen.dart';
+import 'package:ui/screens/bin_screen.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:go_router/go_router.dart';
 
@@ -14,13 +14,13 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
-        return const MainScreen();
+        return const Text('Root!');
       },
     ),
     GoRoute(
-      path: '/hi/:path',
+      path: '/bin/:binId',
       builder: (BuildContext context, GoRouterState state) {
-        return Text("Hello!! ${state.pathParameters['path']}");
+        return BinScreen(binId: state.pathParameters['binId']!);
       },
     ),
   ],
@@ -38,12 +38,14 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       darkTheme: ThemeData.dark().copyWith(
-          colorScheme: darkColorScheme,
-          cardTheme: const CardTheme(
-              margin: EdgeInsets.symmetric(
+        colorScheme: darkColorScheme,
+        cardTheme: const CardTheme(
+          margin: EdgeInsets.symmetric(
             horizontal: 16,
             vertical: 8,
-          ))),
+          ),
+        ),
+      ),
       routerConfig: _router,
       themeMode: ThemeMode.dark,
     );
