@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ui/screens/bin_screen.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ui/screens/main_screen.dart';
 
 final darkColorScheme = ColorScheme.fromSeed(
     brightness: Brightness.dark,
@@ -14,7 +15,7 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
-        return const Text('Root!');
+        return const MainScreen();
       },
     ),
     GoRoute(

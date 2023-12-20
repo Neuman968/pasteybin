@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'bin.g.dart';
+
+@JsonSerializable()
 class Bin {
   Bin({
     required this.id,
@@ -13,4 +18,8 @@ class Bin {
   final String? createdTime;
 
   final String? lastUpdatedTime;
+
+  factory Bin.fromJson(Map<String, dynamic> json) => _$BinFromJson(json);
+
+  Map<String, dynamic> toJson() => _$BinToJson(this);
 }
