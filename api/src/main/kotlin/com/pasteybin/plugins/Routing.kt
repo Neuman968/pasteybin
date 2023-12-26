@@ -27,6 +27,12 @@ val binService: BinService = BinService(database.binQueries)
 
 val logger = LoggerFactory.getLogger(Routing::class.java)
 
+/**
+ * Configures the routing for the application. Sets up the routes and handlers for different endpoints.
+ *
+ * This method is called within the `module` function of the application.
+ *
+ * - The root*/
 fun Application.configureRouting() {
     routing {
         get("/") {

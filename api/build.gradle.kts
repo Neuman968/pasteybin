@@ -1,4 +1,3 @@
-
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
@@ -34,9 +33,9 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 
     implementation("app.cash.sqldelight:sqlite-driver:2.0.1")
-
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    testImplementation("io.mockk:mockk:1.12.0")
 }
 
 sqldelight {
