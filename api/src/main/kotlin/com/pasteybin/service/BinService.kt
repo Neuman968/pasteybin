@@ -94,8 +94,11 @@ class BinService(private val binQueries: BinQueries) {
      * @param binId The ID of the bin.
      * @param session The WebSocket session object.
      */
-    private fun addConnection(binId: String, session: DefaultWebSocketServerSession) {
+    private suspend fun addConnection(binId: String, session: DefaultWebSocketServerSession) {
         connections[binId] = (connections[binId] ?: mutableSetOf()).apply { add(session) }
+        binQueries.selectAll().executeAsList().firstOrNull()?.let { bin ->
+            session.send(bin.content)
+        }
     }
 
     /**

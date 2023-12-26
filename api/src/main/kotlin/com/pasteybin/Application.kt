@@ -1,10 +1,9 @@
 package com.pasteybin
 
 import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.datatype.jsr310.JSR310Module
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.pasteybin.plugins.*
+import com.pasteybin.plugins.configureRouting
+import com.pasteybin.plugins.configureSockets
 import io.ktor.serialization.jackson.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
