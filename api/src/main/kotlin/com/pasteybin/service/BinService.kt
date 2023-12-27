@@ -22,7 +22,6 @@ val binIdChars: List<Char> = ('A'..'Z') + ('a'..'z') + ('0'..'9')
  */
 class BinService(private val binQueries: BinQueries) {
 
-
     /**
      * A mutable map that stores the connections between the server and the client for each bin.
      * The map uses binId as the key and a set of WebSocket server sessions as the value.
@@ -75,7 +74,7 @@ class BinService(private val binQueries: BinQueries) {
         id = binId,
         content = "",
         createdTime = Instant.now(),
-        lastUpdated = Instant.now(),
+        lastUpdatedTime = Instant.now(),
     ).apply { binQueries.insert(this) }
 
     /**
@@ -89,14 +88,15 @@ class BinService(private val binQueries: BinQueries) {
 
     /**
      * Establishes a connection between the server and the client for the given bin.
-     * The connection is made using the provided binId and session.
+     * The connection is made using the provided binId and session. Sends the current bin content over the websocket
+     * on connect.
      *
      * @param binId The ID of the bin.
      * @param session The WebSocket session object.
      */
     private suspend fun addConnection(binId: String, session: DefaultWebSocketServerSession) {
         connections[binId] = (connections[binId] ?: mutableSetOf()).apply { add(session) }
-        binQueries.selectAll().executeAsList().firstOrNull()?.let { bin ->
+        binQueries.selectOne(binId).executeAsList().firstOrNull()?.let { bin ->
             session.send(bin.content)
         }
     }
@@ -124,5 +124,4 @@ class BinService(private val binQueries: BinQueries) {
             session.send(frameText)
         }
     }
-
 }

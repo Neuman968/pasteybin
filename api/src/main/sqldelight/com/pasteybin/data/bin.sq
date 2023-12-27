@@ -4,14 +4,17 @@ CREATE TABLE bin (
     id TEXT NOT NULL PRIMARY KEY,
     content TEXT NOT NULL,
     createdTime INTEGER AS Instant NOT NULL,
-    lastUpdated INTEGER AS Instant NOT NULL
+    lastUpdatedTime INTEGER AS Instant NOT NULL
 );
 
 insert:
-INSERT INTO bin(id, content, createdTime, lastUpdated) VALUES ?;
+INSERT INTO bin(id, content, createdTime, lastUpdatedTime) VALUES ?;
 
 update:
-UPDATE bin SET content = ?, lastUpdated = ? WHERE id = ?;
+UPDATE bin SET content = ?, lastUpdatedTime = ? WHERE id = ?;
+
+selectOne:
+SELECT * FROM bin WHERE id = ?;
 
 selectAll:
-SELECT * FROM bin ORDER BY lastUpdated DESC;
+SELECT * FROM bin ORDER BY lastUpdatedTime DESC;

@@ -19,7 +19,7 @@ fun Application.module() {
     install(ContentNegotiation) {
         jackson {
             registerModule(JavaTimeModule())
-            disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
         }
     }
     configureSockets()
