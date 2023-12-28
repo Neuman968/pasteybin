@@ -24,13 +24,22 @@ class _BinScreenState extends State<BinScreen> {
     return Scaffold(
       drawer: const BinDrawer(),
       appBar: AppBar(
-        title: const Text('WebSocket Demo'),
+        title: Text('Bin ${widget.binId}'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(child: ContentTextField(content: message, onChanged: updateContent, controller: controller)),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: ContentTextField(
+                  content: message,
+                  onChanged: updateContent,
+                  controller: controller,
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -45,8 +54,8 @@ class _BinScreenState extends State<BinScreen> {
   void initState() {
     super.initState();
     setState(() {
-    channel = WebSocketChannel.connect(
-      Uri.parse('ws://localhost:8080/bin/${widget.binId}/ws'));      
+      channel = WebSocketChannel.connect(
+          Uri.parse('ws://localhost:8080/bin/${widget.binId}/ws'));
     });
 
     channel.stream.listen((data) {

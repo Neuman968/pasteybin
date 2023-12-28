@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ui/widgets/current_bin_list.dart';
+import 'package:ui/widgets/new_bin_button.dart';
 
 class BinDrawer extends StatelessWidget {
   const BinDrawer({super.key});
@@ -20,6 +21,7 @@ class BinDrawer extends StatelessWidget {
               },
             ),
           ),
+          const NewBinButton(),
         ],
       ),
     );
