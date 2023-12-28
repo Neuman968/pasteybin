@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ui/widgets/bin_drawer.dart';
 import 'package:ui/widgets/content_text_field.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -21,8 +22,9 @@ class _BinScreenState extends State<BinScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: BinDrawer(),
       appBar: AppBar(
-        title: Text('WebSocket Demo'),
+        title: const Text('WebSocket Demo'),
       ),
       body: Center(
         child: Column(

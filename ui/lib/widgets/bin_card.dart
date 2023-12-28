@@ -4,16 +4,16 @@ import 'package:intl/intl.dart';
 import 'package:ui/model/bin.dart';
 
 class BinCard extends StatelessWidget {
+  const BinCard({required this.bin, required this.onTap});
+
   final Bin bin;
 
-  BinCard({required this.bin});
+  final Function(Bin) onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        GoRouter.of(context).go('/bin/${bin.id}');
-      },
+      onTap: () { onTap(bin); },
       child: Card(
         margin: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: ListTile(

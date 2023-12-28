@@ -2,6 +2,7 @@ package com.pasteybin
 
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.pasteybin.plugins.configureCors
 import com.pasteybin.plugins.configureRouting
 import com.pasteybin.plugins.configureSockets
 import io.ktor.serialization.jackson.*
@@ -23,5 +24,6 @@ fun Application.module() {
         }
     }
     configureSockets()
+    configureCors()
     configureRouting()
 }

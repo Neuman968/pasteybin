@@ -2,27 +2,64 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:ui/model/bin.dart';
+import 'package:ui/widgets/bin_button.dart';
 import 'package:ui/widgets/bin_card.dart';
 
 class MainScreen extends StatelessWidget {
-
   const MainScreen({super.key});
+
+  Future<void> addNewBin(GoRouter router) async {
+    final response = await http.post(Uri.parse('http://localhost:8080/bin'));
+
+    if (response.statusCode == 200) {
+      final dynamic jsonBin = json.decode(response.body);
+      final Bin bin = Bin.fromJson(jsonBin);
+      router.go('/bin/${bin.id}');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BinListWidget();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Bins'),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: CurrentBinList(
+              onBinSelect: (bin) {
+                GoRouter.of(context).go('/bin/${bin.id}');
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: BinButton(
+                text: 'New Bin',
+                onPressed: () {
+                  addNewBin(GoRouter.of(context));
+                }),
+          )
+        ],
+      ),
+    );
   }
 }
 
+class CurrentBinList extends StatefulWidget {
+  const CurrentBinList({super.key, required this.onBinSelect});
 
-class BinListWidget extends StatefulWidget {
+  final Function(Bin) onBinSelect;
+
   @override
-  _BinListWidgetState createState() => _BinListWidgetState();
+  _CurrentBinListState createState() => _CurrentBinListState();
 }
 
-class _BinListWidgetState extends State<BinListWidget> {
+class _CurrentBinListState extends State<CurrentBinList> {
   late List<Bin> bins = [];
 
   @override
@@ -46,21 +83,19 @@ class _BinListWidgetState extends State<BinListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Bins'),
-      ),
-      body: bins.isNotEmpty
-          ? ListView.builder(
-              itemCount: bins.length,
-              itemBuilder: (context, index) {
-                final bin = bins[index];
-                return BinCard(bin: bin);
-              },
-            )
-          : const Center(
-              child: CircularProgressIndicator(),
-            ),
-    );
+    return bins.isNotEmpty
+        ? ListView.builder(
+            itemCount: bins.length,
+            itemBuilder: (context, index) {
+              final bin = bins[index];
+              return BinCard(
+                bin: bin,
+                onTap: widget.onBinSelect,
+              );
+            },
+          )
+        : const Center(
+            child: CircularProgressIndicator(),
+          );
   }
 }
