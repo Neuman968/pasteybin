@@ -57,7 +57,7 @@ class PrimaryContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
+      
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(radius ?? 30),
         boxShadow: [

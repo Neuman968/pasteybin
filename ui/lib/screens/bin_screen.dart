@@ -22,7 +22,7 @@ class _BinScreenState extends State<BinScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: BinDrawer(),
+      drawer: const BinDrawer(),
       appBar: AppBar(
         title: const Text('WebSocket Demo'),
       ),
@@ -30,7 +30,7 @@ class _BinScreenState extends State<BinScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ContentTextField(content: message, onChanged: updateContent, controller: controller),
+            Expanded(child: ContentTextField(content: message, onChanged: updateContent, controller: controller)),
           ],
         ),
       ),
