@@ -9,6 +9,7 @@ plugins {
     id("io.ktor.plugin") version "2.3.7"
     id("app.cash.sqldelight") version "2.0.1"
     id("com.bmuschko.docker-remote-api") version "9.4.0"
+    id("com.google.cloud.tools.jib") version "3.4.0"
 
 }
 
@@ -43,14 +44,21 @@ dependencies {
     testImplementation("io.mockk:mockk:1.12.0")
 }
 
-//tasks {
-//    val buildDockerImage by creating(DockerBuildImage::class) {
-//        inputDir = project.file("path/to/your/application")
-////        images = listOf("your-docker-image:latest")
-//        dockerFile = project.file("path/to/your/Dockerfile")
-//
-//    }
-//}
+
+jib {
+    from {
+        image = "docker://pastybin-ui-base:latest"
+    }
+    container {
+        ports = listOf("8080", "8081")
+        environment = mapOf(
+            "API_HOST" to "localhost:8080",
+            "USE_TLS" to "false"
+        )
+        user = "www-data"
+    }
+}
+
 
 tasks.create("buildMyAppImage", DockerBuildImage::class) {
     inputDir.set(file("../Dockerfile"))

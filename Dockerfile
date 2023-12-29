@@ -8,6 +8,7 @@ RUN apt-get install -y curl git unzip
 ARG FLUTTER_SDK=/usr/local/flutter
 ARG FLUTTER_VERSION=3.16.1
 ARG APP=/ui/
+ARG API_HOST=localhost:8080
 
 #clone flutter
 RUN git clone https://github.com/flutter/flutter.git $FLUTTER_SDK
@@ -31,15 +32,14 @@ WORKDIR $APP
 # Run build: 1 - clean, 2 - pub get, 3 - build web
 RUN flutter clean
 RUN flutter pub get
-RUN flutter build web
+RUN flutter build web --dart-define=API_HOST=${API_HOST}
 
+FROM eclipse-temurin:19
 
-# use nginx to deploy
-FROM nginx:1.25.2-alpine
+RUN mkdir -p /opt/pastybin/ui
 
-# copy the info of the builded web app to nginx
-COPY --from=build-env /ui/build/web /usr/share/nginx/html
+EXPOSE 8080
+EXPOSE 8081
 
-# Expose and run nginx
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+COPY --from=build-env /ui/build/web /opt/pastybin/ui
+

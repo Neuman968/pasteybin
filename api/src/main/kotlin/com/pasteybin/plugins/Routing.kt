@@ -7,11 +7,13 @@ import com.pasteybin.data.Database
 import com.pasteybin.service.BinService
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.http.content.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import org.slf4j.LoggerFactory
+import java.io.File
 import java.time.Instant
 
 val instantAdapter = object : ColumnAdapter<Instant, Long> {
