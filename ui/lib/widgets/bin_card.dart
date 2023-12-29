@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:ui/model/bin.dart';
 
@@ -15,7 +14,7 @@ class BinCard extends StatelessWidget {
     return InkWell(
       onTap: () { onTap(bin); },
       child: Card(
-        margin: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: ListTile(
           title: Text('Bin ${bin.id}'),
           subtitle: Column(

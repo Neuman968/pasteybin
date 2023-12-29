@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ui/main.dart';
 import 'package:ui/widgets/bin_drawer.dart';
 import 'package:ui/widgets/content_text_field.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -55,7 +56,7 @@ class _BinScreenState extends State<BinScreen> {
     super.initState();
     setState(() {
       channel = WebSocketChannel.connect(
-          Uri.parse('ws://localhost:8080/bin/${widget.binId}/ws'));
+          Uri.parse('$WS_PROTOCOL://$API_HOST/bin/${widget.binId}/ws'));
     });
 
     channel.stream.listen((data) {

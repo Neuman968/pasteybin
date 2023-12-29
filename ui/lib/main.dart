@@ -5,6 +5,14 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ui/screens/main_screen.dart';
 
+const API_HOST = String.fromEnvironment('API_HOST');
+
+const USE_TLS = String.fromEnvironment('USE_TLS') == 'true';
+
+const WS_PROTOCOL = USE_TLS ? 'wss' : 'ws';
+
+const HTTP_PROTOCOL = USE_TLS ? 'https' : 'http';
+
 final darkColorScheme = ColorScheme.fromSeed(
     brightness: Brightness.dark,
     seedColor: const Color.fromARGB(255, 161, 215, 192));

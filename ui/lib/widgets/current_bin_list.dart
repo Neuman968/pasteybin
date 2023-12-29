@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:ui/main.dart';
 import 'package:ui/model/bin.dart';
 import 'package:ui/widgets/bin_card.dart';
 
@@ -24,8 +25,8 @@ class _CurrentBinListState extends State<CurrentBinList> {
   }
 
   Future<void> fetchBins() async {
-    final response = await http.get(Uri.parse('http://localhost:8080/bin'));
-
+    final response = await http.get(Uri.parse('$HTTP_PROTOCOL://$API_HOST/bin'));
+  
     if (response.statusCode == 200) {
       final List<dynamic> jsonBins = json.decode(response.body);
       setState(() {
