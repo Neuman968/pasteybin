@@ -14,7 +14,7 @@ plugins {
 }
 
 group = "com.pasteybin"
-version = "0.0.1"
+version = "latest"
 
 application {
     mainClass.set("com.pasteybin.ApplicationKt")
@@ -47,13 +47,33 @@ dependencies {
 
 jib {
     from {
-        image = "docker://pastybin-ui-base:latest"
+        image = "eclipse-temurin:19-jdk-jammy"
+        extraDirectories {
+            paths {
+                path {
+                    setFrom("./static")
+                    setInto("/opt/pasteybin/ui")
+                }
+//                path {
+//                    setFrom("./db")
+//                    setInto("/db")
+//                }
+            }
+        }
+        platforms {
+            platform {
+                architecture = "arm"
+                os = "linux"
+            }
+        }
     }
+
     container {
         ports = listOf("8080", "8081")
         environment = mapOf(
             "API_HOST" to "localhost:8080",
-            "USE_TLS" to "false"
+            "USE_TLS" to "false",
+            "DB_LOCATION" to "jdbc:sqlite:/db/pastey.db",
         )
         user = "www-data"
     }
@@ -62,7 +82,7 @@ jib {
 
 tasks.create("buildMyAppImage", DockerBuildImage::class) {
     inputDir.set(file("../Dockerfile"))
-    images.add("pastybin-ui-base")
+    images.add("pasteybin-ui-base")
 }
 
 sqldelight {

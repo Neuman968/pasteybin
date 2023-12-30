@@ -26,7 +26,7 @@ fun Application.staticUiModule() {
     install(ContentNegotiation) {
     }
     routing {
-        staticFiles("/", File("/opt/pastybin/ui"))
+        staticFiles("/", File("/opt/pasteybin/ui"))
     }
 }
 

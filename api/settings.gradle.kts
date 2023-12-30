@@ -1,1 +1,1 @@
-rootProject.name = "com.example.api"
+rootProject.name = "com.pasteybin"

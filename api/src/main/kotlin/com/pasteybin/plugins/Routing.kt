@@ -22,10 +22,11 @@ val instantAdapter = object : ColumnAdapter<Instant, Long> {
     override fun encode(value: Instant): Long = value.toEpochMilli()
 }
 
-val database = Database(JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY).apply {
+val dbEnv = System.getenv("DB_LOCATION") ?: "jdbc:sqlite:pastey.db"
+
+val database = Database(JdbcSqliteDriver(dbEnv).apply {
     Database.Schema.create(this)
 }, Bin.Adapter(instantAdapter, instantAdapter))
-
 
 val binService: BinService = BinService(database.binQueries)
 
