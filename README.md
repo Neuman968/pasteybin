@@ -34,10 +34,4 @@ docker run -p "8081:8081" -p "8080:8080" -v $(pwd):/db:rw --name pasteybin com.p
    - [WebSocket Channel](https://pub.dev/packages/web_socket_channel)
    - [Go Router](https://pub.dev/packages/go_router)
 
-## Cloning the project
 
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/your-username/your-project.git
-   cd your-project
