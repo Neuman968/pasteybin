@@ -5,7 +5,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ui/screens/main_screen.dart';
 
-const API_HOST = String.fromEnvironment('API_HOST');
+const API_HOST = String.fromEnvironment('API_HOST', defaultValue: 'localhost:8080');
 
 const USE_TLS = String.fromEnvironment('USE_TLS') == 'true';
 

@@ -51,13 +51,9 @@ jib {
         extraDirectories {
             paths {
                 path {
-                    setFrom("./static")
+                    setFrom("./static/web")
                     setInto("/opt/pasteybin/ui")
                 }
-//                path {
-//                    setFrom("./db")
-//                    setInto("/db")
-//                }
             }
         }
         platforms {

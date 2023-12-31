@@ -50,7 +50,7 @@ echo "API Host: $API_HOST"
 #docker buildx build --platform linux/arm64 -t pasteybin-ui-base --build-arg API_HOST=$API_HOST .
 
 pushd ui
-flutter build web --dart-define=API_HOST=johnspi 
+flutter build web --dart-define=API_HOST=$API_HOST
 popd
 
 cp -R ui/build/web api/static
