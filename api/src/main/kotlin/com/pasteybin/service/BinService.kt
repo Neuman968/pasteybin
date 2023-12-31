@@ -43,8 +43,10 @@ class BinService(private val binQueries: BinQueries) {
                 binService.contentUpdated(binId, frame)
             }
         } catch (e: Exception) {
+            logger.info("Bin Service Exception:")
             logger.error(e.localizedMessage)
         } finally {
+            logger.info("Removing connection.")
             binService.removeConnection(binId, session)
         }
     }

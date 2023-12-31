@@ -26,7 +26,10 @@ fun Application.staticUiModule() {
     install(ContentNegotiation) {
     }
     routing {
-        staticFiles("/", File("/opt/pasteybin/ui"))
+        staticFiles("/", File("/opt/pasteybin/ui")) {
+            default("index.html")
+            enableAutoHeadResponse()
+        }
     }
 }
 
