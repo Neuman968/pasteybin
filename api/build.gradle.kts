@@ -1,5 +1,3 @@
-import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
-
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
@@ -8,9 +6,7 @@ plugins {
     kotlin("jvm") version "1.9.21"
     id("io.ktor.plugin") version "2.3.7"
     id("app.cash.sqldelight") version "2.0.1"
-    id("com.bmuschko.docker-remote-api") version "9.4.0"
     id("com.google.cloud.tools.jib") version "3.4.0"
-
 }
 
 group = "com.pasteybin"
@@ -73,12 +69,6 @@ jib {
         )
         user = "www-data"
     }
-}
-
-
-tasks.create("buildMyAppImage", DockerBuildImage::class) {
-    inputDir.set(file("../Dockerfile"))
-    images.add("pasteybin-ui-base")
 }
 
 sqldelight {
