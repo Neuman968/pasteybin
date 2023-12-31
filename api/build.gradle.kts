@@ -59,7 +59,9 @@ jib {
             }
         }
     }
-
+    to {
+        image = ""
+    }
     container {
         ports = listOf("8080", "8081")
         environment = mapOf(

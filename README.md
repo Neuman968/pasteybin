@@ -4,7 +4,7 @@
 [![Ktor Version](https://img.shields.io/badge/Ktor-1.6.4-orange.svg)](https://ktor.io/)
 [![Flutter Version](https://img.shields.io/badge/Flutter-2.8.0-blue.svg)](https://flutter.dev/)
 
-[![GitHub CI](https://github.com/your-username/your-project/workflows/CI/badge.svg)](https://github.com/your-username/your-project/actions)
+[![GitHub CI](https://github.com/Neuman968/pasteybin/workflows/CI/badge.svg)](https://github.com/Neuman968/pasteybin/actions)
 
 Open Source Pastebin alternative. Runs on any hardware that can run docker.
 
