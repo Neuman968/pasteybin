@@ -14,19 +14,17 @@ import java.util.concurrent.ConcurrentHashMap
  */
 val binIdChars: List<Char> = ('A'..'Z') + ('a'..'z') + ('0'..'9')
 
-/**
- * The BinService class handles the management of bins and their content.
- *
- * @property binQueries The BinQueries object used for interacting with the database.
- * @property connections A map of bin IDs to WebSocket server sessions for tracking active connections.
- */
-class BinService(private val binQueries: BinQueries) {
 
-    /**
-     * A mutable map that stores the connections between the server and the client for each bin.
-     * The map uses binId as the key and a set of WebSocket server sessions as the value.
-     */
-    private val connections: MutableMap<String, MutableSet<DefaultWebSocketServerSession>> = ConcurrentHashMap()
+/**
+ * Represents a service for handling operations related to bins.
+ *
+ * @property binQueries An instance of the BinQueries class for interacting with the database.
+ * @property connections A mutable map that stores the active connections for each bin.
+ */
+class BinService(
+    private val binQueries: BinQueries,
+    private val connections: MutableMap<String, MutableSet<DefaultWebSocketServerSession>> = ConcurrentHashMap(),
+) {
 
     /**
      * Establishes a connection between the server and the client for the given bin.
@@ -98,7 +96,7 @@ class BinService(private val binQueries: BinQueries) {
      */
     private suspend fun addConnection(binId: String, session: DefaultWebSocketServerSession) {
         connections[binId] = (connections[binId] ?: mutableSetOf()).apply { add(session) }
-        binQueries.selectOne(binId).executeAsList().firstOrNull()?.let { bin ->
+        binQueries.selectOne(binId).executeAsOneOrNull()?.let { bin ->
             session.send(bin.content)
         }
     }
