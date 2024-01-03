@@ -14,10 +14,6 @@ fun Application.staticUiModule() {
         get("/apihost") {
             call.respondText { System.getenv("API_HOST") ?: "localhost:8080" }
         }
-
-        get("/usetls") {
-            call.respondText { System.getenv("USE_TLS") ?: "false" }
-        }
         staticFiles("/", File("/opt/pasteybin/ui")) {
             default("index.html")
             enableAutoHeadResponse()

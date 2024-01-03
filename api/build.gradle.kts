@@ -80,7 +80,6 @@ jib {
         ports = listOf("8080", "8081")
         environment = mapOf(
             "API_HOST" to "localhost:8080",
-            "USE_TLS" to "false",
             "DB_LOCATION" to "jdbc:sqlite:/db/pastey.db",
         )
         user = "www-data"
