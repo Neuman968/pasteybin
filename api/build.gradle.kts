@@ -1,6 +1,9 @@
 val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
+val multiplatform_build: String by project
+
+val isMultiplatformBuild: Boolean = multiplatform_build.lowercase() == "true"
 
 plugins {
     kotlin("jvm") version "1.9.21"
@@ -48,19 +51,30 @@ jib {
             paths {
                 path {
                     setFrom("./static/web")
-                    setInto("/opt/pasteybin/ui")
+                    into = "/opt/pasteybin/ui"
                 }
             }
         }
-        platforms {
-            platform {
-                architecture = "arm"
-                os = "linux"
+        if (isMultiplatformBuild) {
+            platforms {
+                platform {
+                    architecture = "arm"
+                    os = "linux"
+                }
+                platform {
+                    architecture = "arm64"
+                    os = "linux"
+                }
+
+                platform {
+                    architecture = "amd64"
+                    os = "linux"
+                }
             }
         }
     }
     to {
-        image = ""
+        image = "neuman314/pasteybin"
     }
     container {
         ports = listOf("8080", "8081")
