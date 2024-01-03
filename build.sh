@@ -4,8 +4,8 @@
 usage() {
   echo "Usage: $0 [OPTIONS]"
   echo "Options:"
-  echo "  --api-host      Specify the API host"
-  echo "  -h, --help      Display this help message"
+  echo "  --multiplatform          Runs ./gradlew jib with all target platforms. Requires remote registry login"
+  echo "  -h, --help               Display this help message"
   exit 1
 }
 
@@ -20,6 +20,8 @@ while [[ $# -gt 0 ]]; do
       ;;
     --multiplatform)
       multiplatform=true
+      shift # past argument
+      shift # past value
       ;;
     *)
       echo "Unknown option: $key"
