@@ -5,6 +5,8 @@ build/
 !**/src/test/**/build/
 
 
+pastey.db
+
 api/static
 ### STS ###
 .apt_generated

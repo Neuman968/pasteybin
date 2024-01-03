@@ -25,7 +25,8 @@ class _CurrentBinListState extends State<CurrentBinList> {
   }
 
   Future<void> fetchBins() async {
-    final response = await http.get(Uri.parse('$HTTP_PROTOCOL://$API_HOST/bin'));
+    final host = await API_HOST;
+    final response = await http.get(Uri.parse('$HTTP_PROTOCOL://$host/bin'));
   
     if (response.statusCode == 200) {
       final List<dynamic> jsonBins = json.decode(response.body);

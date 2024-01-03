@@ -54,17 +54,26 @@ class _BinScreenState extends State<BinScreen> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      channel = WebSocketChannel.connect(
-          Uri.parse('$WS_PROTOCOL://$API_HOST/bin/${widget.binId}/ws'));
-    });
 
-    channel.stream.listen((data) {
+    _getWebSocketChannel().then((wschannel) {
+      
       setState(() {
-        message = data;
-        controller.text = data;
+        channel = wschannel;
+      });
+
+      wschannel.stream.listen((data) {
+        setState(() {
+          message = data;
+          controller.text = data;
+        });
       });
     });
+  }
+
+  Future<WebSocketChannel> _getWebSocketChannel() async {
+    final host = await API_HOST;
+    return WebSocketChannel.connect(
+        Uri.parse('$WS_PROTOCOL://$host/bin/${widget.binId}/ws'));
   }
 
   @override

@@ -10,7 +10,8 @@ class NewBinButton extends StatelessWidget {
   const NewBinButton({super.key});
 
   Future<void> addNewBin(GoRouter router) async {
-    final response = await http.post(Uri.parse('$HTTP_PROTOCOL://$API_HOST/bin'));
+    final host = await API_HOST;
+    final response = await http.post(Uri.parse('$HTTP_PROTOCOL://$host/bin'));
 
     if (response.statusCode == 200) {
       final dynamic jsonBin = json.decode(response.body);
