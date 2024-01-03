@@ -65,6 +65,18 @@ class BinService(
     private fun updateContent(binId: String, content: String) = binQueries.update(content, Instant.now(), binId)
 
     /**
+     * Updates the title of a bin with the specified binId and returns the updated Bin object.
+     *
+     * @param binId The ID of the bin.
+     * @param title The new title to be updated.
+     * @return The updated Bin object, or null if no bin with the specified binId is found.
+     */
+    fun updateTitle(binId: String, title: String): Bin? =
+        binQueries.updateTitle(title, Instant.now(), binId).let {
+            binQueries.selectOne(binId).executeAsOneOrNull()
+        }
+
+    /**
      * Creates a new bin with the provided binId or a generated binId if none is provided.
      *
      * @param binId The ID of the bin (optional, default is generated using generateBinId()).
@@ -73,6 +85,7 @@ class BinService(
     fun newBin(binId: String = generateBinId()): Bin = Bin(
         id = binId,
         content = "",
+        title = "Bin: $binId",
         createdTime = Instant.now(),
         lastUpdatedTime = Instant.now(),
     ).apply { binQueries.insert(this) }

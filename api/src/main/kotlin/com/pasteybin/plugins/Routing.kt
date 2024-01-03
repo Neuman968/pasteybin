@@ -9,6 +9,7 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.http.content.*
 import io.ktor.server.plugins.cors.routing.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
@@ -56,6 +57,12 @@ fun Application.configureRouting() {
 
                 post {
                     call.respond(binService.newBin(call.parameters["id"].toString()))
+                }
+
+                put("/title") {
+                    binService.updateTitle(call.parameters["id"].toString(), call.receive())?.let {
+                        call.respond(it)
+                    } ?: call.respond(HttpStatusCode.NotFound, "Bin not found")
                 }
                 webSocket("/ws") {
                     binService.connect(call.parameters["id"].toString(), this)

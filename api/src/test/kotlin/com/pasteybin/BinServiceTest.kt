@@ -37,6 +37,7 @@ class BinServiceTest {
     val testBin = Bin(
         id = "abc",
         content = "This is some test content",
+        title = "test title",
         createdTime = testCreatedTime.minusSeconds(60 * 60),
         lastUpdatedTime = testCreatedTime.minusSeconds(60 * 60),
     )
@@ -44,6 +45,7 @@ class BinServiceTest {
     val testBin2 = Bin(
         id = "123",
         content = "test 123",
+        title = "test title",
         createdTime = testCreatedTime,
         lastUpdatedTime = testCreatedTime,
     )
@@ -51,6 +53,7 @@ class BinServiceTest {
     val testBin3 = Bin(
         id = "000",
         content = "Foobar",
+        title = "test title",
         createdTime = testCreatedTime.minusSeconds(60 * 60),
         lastUpdatedTime = testCreatedTime.minusSeconds(60 * 10),
     )
@@ -129,5 +132,14 @@ class BinServiceTest {
         assert(binService.getOrderLastUpdated().first().id == bin.id) {
             "New bin should have been last updated"
         }
+    }
+
+    @Test
+    fun `test update bin passing updated bin title expecting title updated`() {
+        val updatedBin = binService.updateTitle("abc", "New Title!!")
+        val savedBin = binQueries.selectOne("abc").executeAsOneOrNull()
+        assert(savedBin?.title == "New Title!!") { "Title was not updated" }
+        assert(savedBin?.id == updatedBin?.id) { "Returned bin was not as expected" }
+        assert(savedBin?.title == updatedBin?.title) { "Returned bin title was not as expected" }
     }
 }
