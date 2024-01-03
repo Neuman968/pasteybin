@@ -9,12 +9,17 @@ usage() {
   exit 1
 }
 
+multiplatform=false
+
 # Parse command line options
 while [[ $# -gt 0 ]]; do
   key="$1"
   case $key in
     -h|--help)
       usage
+      ;;
+    --multiplatform)
+      multiplatform=true
       ;;
     *)
       echo "Unknown option: $key"
@@ -23,15 +28,6 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-# Your script logic goes here
-echo "API Host: $API_HOST"
-
-#docker build -t pasteybin-ui-base --build-arg API_HOST=$API_HOST .
-
-#docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7 -t pasteybin-ui-base --build-arg API_HOST=$API_HOST .
-
-#docker buildx build --platform linux/arm64 -t pasteybin-ui-base --build-arg API_HOST=$API_HOST .
-
 pushd ui
 flutter build web
 popd
@@ -39,7 +35,12 @@ popd
 cp -R ui/build/web api/static
 
 pushd api
-./gradlew clean jibDockerBuild
+  echo "building...";
+  if [[ "$multiplatform" == "true" ]]; then
+    ./gradlew clean jib -Pmultiplatform_build=true
+  else
+    ./gradlew clean jibDockerBuild
+  fi
 popd
 
 exit 0;
