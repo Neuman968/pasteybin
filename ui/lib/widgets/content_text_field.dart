@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class ContentTextField extends StatelessWidget {
   const ContentTextField({
     super.key,
+    this.maxLines = 1000,
     required this.onChanged,
     required this.content,
     required this.controller,
@@ -13,6 +14,8 @@ class ContentTextField extends StatelessWidget {
   final String content;
 
   final TextEditingController controller;
+
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,7 @@ class ContentTextField extends StatelessWidget {
           controller.selection = previousSelection;
           onChanged(value);
         },
-        maxLines: 1000,
+        maxLines: maxLines,
         style: const TextStyle(fontSize: 16, color: Colors.white),
         controller: controller,
         decoration: const InputDecoration(

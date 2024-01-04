@@ -6,12 +6,15 @@ part 'bin.g.dart';
 class Bin {
   Bin({
     required this.id,
+    required this.title,
     required this.content,
     this.createdTime,
     this.lastUpdatedTime,
   });
 
   final String id;
+
+  final String title;
 
   final String content;
 

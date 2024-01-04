@@ -77,6 +77,14 @@ class BinService(
         }
 
     /**
+     * Retrieves a single bin by its ID.
+     *
+     * @param binId The ID of the bin to retrieve.
+     * @return The retrieved Bin object, or null if no bin with the specified ID is found.
+     */
+    fun getOne(binId: String): Bin? = binQueries.selectOne(binId).executeAsOneOrNull()
+
+    /**
      * Creates a new bin with the provided binId or a generated binId if none is provided.
      *
      * @param binId The ID of the bin (optional, default is generated using generateBinId()).

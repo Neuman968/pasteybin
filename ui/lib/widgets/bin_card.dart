@@ -16,7 +16,7 @@ class BinCard extends StatelessWidget {
       child: Card(
         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: ListTile(
-          title: Text('Bin ${bin.id}'),
+          title: Text(bin.title),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -55,6 +55,12 @@ fun Application.configureRouting() {
 
             route("/{id}") {
 
+                get {
+                    binService.getOne(call.parameters["id"].toString())?.let {
+                        call.respond(it)
+                    }?: call.respond(HttpStatusCode.NotFound, "Bin not found")
+                }
+
                 post {
                     call.respond(binService.newBin(call.parameters["id"].toString()))
                 }

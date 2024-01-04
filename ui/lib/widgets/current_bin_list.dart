@@ -16,7 +16,7 @@ class CurrentBinList extends StatefulWidget {
 }
 
 class _CurrentBinListState extends State<CurrentBinList> {
-  late List<Bin> bins = [];
+  List<Bin>? bins;
 
   @override
   void initState() {
@@ -27,7 +27,7 @@ class _CurrentBinListState extends State<CurrentBinList> {
   Future<void> fetchBins() async {
     final host = await API_HOST;
     final response = await http.get(Uri.parse('$HTTP_PROTOCOL://$host/bin'));
-  
+
     if (response.statusCode == 200) {
       final List<dynamic> jsonBins = json.decode(response.body);
       setState(() {
@@ -40,19 +40,25 @@ class _CurrentBinListState extends State<CurrentBinList> {
 
   @override
   Widget build(BuildContext context) {
-    return bins.isNotEmpty
+    if (bins == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    return bins!.isNotEmpty
         ? ListView.builder(
-            itemCount: bins.length,
+            itemCount: bins!.length,
             itemBuilder: (context, index) {
-              final bin = bins[index];
+              final bin = bins![index];
               return BinCard(
                 bin: bin,
                 onTap: widget.onBinSelect,
               );
             },
           )
-        : const Center(
-            child: CircularProgressIndicator(),
+        : Center(
+            child: Text(
+              'Add a Bin to get started!',
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(),
+            ),
           );
   }
 }
