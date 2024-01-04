@@ -32,7 +32,7 @@ class _BinScreenState extends State<BinScreen> {
     return Scaffold(
       drawer: const BinDrawer(),
       appBar: AppBar(
-        title: const Text(''),
+        title: const Text('Edit Bin'),
       ),
       body: Center(
         child: Column(
