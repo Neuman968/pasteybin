@@ -19,7 +19,7 @@ The api server runs on port `8080`
 docker run -p "8081:8081" -p "8080:8080" -v $(pwd):/db:rw --name pasteybin neuman314/pasteybin
 ```
 
-You can also specify ai host if hosted somewhere other than `localhost:8080`
+You can also specify api host if hosted somewhere other than `localhost:8080`
 
 ```bash
 docker run -e 'API_HOST=raspberrypi:8080' -p "8081:8081" -p "8080:8080" -v $(pwd):/db:rw --name pasteybin neuman314/pasteybin
