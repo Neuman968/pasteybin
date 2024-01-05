@@ -6,7 +6,7 @@
 
 [![GitHub CI](https://github.com/Neuman968/pasteybin/workflows/CI/badge.svg)](https://github.com/Neuman968/pasteybin/actions)
 
-Open Source Pastebin alternative. Runs on any hardware that can run docker.
+Open Source Pastebin alternative.
 
 ## Installation
 
@@ -24,6 +24,29 @@ You can also specify api host if hosted somewhere other than `localhost:8080`
 ```bash
 docker run -e 'API_HOST=raspberrypi:8080' -p "8081:8081" -p "8080:8080" -v $(pwd):/db:rw --name pasteybin neuman314/pasteybin
 ```
+
+If you navigate to `http://localhost:8081/` to use the application.
+
+## Running from source 
+
+Clone the repository.
+
+```bash
+git clone git@github.com:Neuman968/pasteybin.git
+```
+
+Note: Java and Flutter are required in order to build the project.
+
+The flutter application is located in the `ui` folder. 
+
+The Kotlin server application is located in the `api` folder.
+
+There is a `build.sh` utility that allows for building the docker image using gradle jib. Flutter is compiled as a web application and the static html and javascript is hosted by ktor on port `8081`. The REST and websocket endpoints are hosted on port `8080`. 
+
+
+## Contributing
+
+Contributions are welcome, including feature requests, pull requests, etc.
 
 ## Technologies used in this project
 
