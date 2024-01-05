@@ -3,8 +3,8 @@
 [![Kotlin Version](https://img.shields.io/badge/Kotlin-1.5.31-blue.svg)](https://kotlinlang.org/)
 [![Ktor Version](https://img.shields.io/badge/Ktor-1.6.4-orange.svg)](https://ktor.io/)
 [![Flutter Version](https://img.shields.io/badge/Flutter-2.8.0-blue.svg)](https://flutter.dev/)
-
-[![GitHub CI](https://github.com/Neuman968/pasteybin/workflows/CI/badge.svg)](https://github.com/Neuman968/pasteybin/actions)
+![build status](https://github.com/Neuman968/pasteybin/actions/workflows/ci.yml/badge.svg) 
+[![PR's Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
 
 Open Source Pastebin alternative.
 
