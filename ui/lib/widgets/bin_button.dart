@@ -17,7 +17,7 @@ class BinButton extends StatelessWidget {
           end: Alignment.bottomRight,
           colors: [
             Theme.of(context).colorScheme.primary,
-            Theme.of(context).colorScheme.secondary,
+            Theme.of(context).colorScheme.primaryContainer.withOpacity(0.9),
           ],
         ),
         borderRadius: BorderRadius.circular(8.0),

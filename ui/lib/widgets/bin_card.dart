@@ -14,6 +14,7 @@ class BinCard extends StatelessWidget {
     return InkWell(
       onTap: () { onTap(bin); },
       child: Card(
+        color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.40),
         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: ListTile(
           title: Text(bin.title),
