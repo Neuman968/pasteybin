@@ -51,8 +51,8 @@ fun corsScheme(): List<String> = System.getenv("CORS_SCHEMES")?.split(",") ?: li
 
 /**
  * Retrieves the list of allowed CORS hosts from the environment variable "CORS_HOSTS".
- * If the environment variable is null or empty, the default hosts ["localhost:8080", "localhost:8081"] will be used.
+ * If the environment variable is null or empty, the default hosts wildcard ["*"] will be used.
  *
  * @return The list of allowed CORS hosts.
  */
-fun corsHosts(): List<String> = System.getenv("CORS_HOSTS")?.split(",") ?: listOf("localhost:8080", "localhost:8081")
+fun corsHosts(): List<String> = System.getenv("CORS_HOSTS")?.split(",") ?: listOf("*")
