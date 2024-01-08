@@ -10,6 +10,7 @@ import java.io.File
 fun Application.staticUiModule() {
     install(ContentNegotiation) {
     }
+    configureCors()
     routing {
         get("/apihost") {
             call.respondText { System.getenv("API_HOST") ?: "localhost:8080" }

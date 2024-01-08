@@ -22,10 +22,19 @@ docker run -p "8081:8081" -p "8080:8080" -v $(pwd):/db:rw --name pasteybin neuma
 You can also specify api host if hosted somewhere other than `localhost:8080`
 
 ```bash
-docker run -e 'API_HOST=raspberrypi:8080' -p "8081:8081" -p "8080:8080" -v $(pwd):/db:rw --name pasteybin neuman314/pasteybin
+docker run -e 'API_HOST=raspberrypi:8080' -e 'CORS_HOSTS=raspberrypi:8080,raspberrypi:8081' -p "8081:8081" -p "8080:8080" -v $(pwd):/db:rw --name pasteybin neuman314/pasteybin
 ```
 
 If you navigate to `http://localhost:8081/` to use the application.
+
+## Cors Configuration
+
+Allowed Cors can be configured using the CORS_HOSTS and CORS_SCHEMES environment variables. 
+
+When the CORS_HOSTS environment variable is not set, it defautls to a wildcard host *
+The default CORS_HOSTS when running in docker is `localhost:8080` and `localhost:8081`
+Default CORS_SCHEMES is http and ws. If using TLS, can be set to https and wss
+
 
 ## Running from source 
 
