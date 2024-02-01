@@ -6,6 +6,7 @@ build/
 
 
 pastey.db
+api/pastey.db
 
 api/static
 ### STS ###
