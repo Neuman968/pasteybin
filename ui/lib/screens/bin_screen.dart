@@ -94,7 +94,9 @@ class _BinScreenState extends State<BinScreen> {
       wschannel.stream.listen((data) {
         setState(() {
           message = data;
+          TextSelection previousSelection = controller.selection;
           controller.text = data;
+          controller.selection = previousSelection; 
         });
       });
     });

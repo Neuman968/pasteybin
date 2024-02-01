@@ -22,12 +22,7 @@ class ContentTextField extends StatelessWidget {
     return PrimaryContainer(
       radius: 10,
       child: TextField(
-        onChanged: (value) {
-          TextSelection previousSelection = controller.selection;
-          controller.text = value;
-          controller.selection = previousSelection;
-          onChanged(value);
-        },
+        onChanged: onChanged,
         maxLines: maxLines,
         style: const TextStyle(fontSize: 16, color: Colors.white),
         controller: controller,
