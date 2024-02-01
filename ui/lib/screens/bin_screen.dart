@@ -17,15 +17,49 @@ class BinScreen extends StatefulWidget {
 }
 
 class _BinScreenState extends State<BinScreen> {
-  Bin? bin;
+  Bin? _bin;
 
-  late WebSocketChannel channel;
+  late WebSocketChannel _channel;
 
-  String message = 'No data received';
+  String _message = 'No data received';
 
-  final TextEditingController controller = TextEditingController(text: '');
+  final TextEditingController _controller = TextEditingController(text: '');
 
-  final TextEditingController titleController = TextEditingController(text: '');
+  final TextEditingController _titleController =
+      TextEditingController(text: '');
+
+  @override
+  void initState() {
+    super.initState();
+
+    _getBin().then((updatedBin) {
+      setState(() {
+        _bin = updatedBin;
+        _titleController.text = updatedBin.title;
+      });
+    });
+
+    _getWebSocketChannel().then((wschannel) {
+      setState(() {
+        _channel = wschannel;
+      });
+
+      wschannel.stream.listen((data) {
+        setState(() {
+          _message = data;
+          TextSelection previousSelection = _controller.selection;
+          _controller.text = data;
+          _controller.selection = previousSelection;
+        });
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _channel.sink.close();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +74,7 @@ class _BinScreenState extends State<BinScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.all(20),
-              child: bin != null
+              child: _bin != null
                   ? Focus(
                       onFocusChange: (focused) {
                         if (!focused) {
@@ -50,8 +84,8 @@ class _BinScreenState extends State<BinScreen> {
                       child: ContentTextField(
                           maxLines: 1,
                           onChanged: (changedTitle) {},
-                          controller: titleController,
-                          content: bin!.title),
+                          controller: _titleController,
+                          content: _bin!.title),
                     )
                   : const CircularProgressIndicator(),
             ),
@@ -59,9 +93,9 @@ class _BinScreenState extends State<BinScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: ContentTextField(
-                  content: message,
-                  onChanged: updateContent,
-                  controller: controller,
+                  content: _message,
+                  onChanged: _updateContent,
+                  controller: _controller,
                 ),
               ),
             ),
@@ -71,35 +105,8 @@ class _BinScreenState extends State<BinScreen> {
     );
   }
 
-  void updateContent(String updatedContent) {
-    channel.sink.add(updatedContent);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    _getBin().then((_bin) {
-      setState(() {
-        bin = _bin;
-        titleController.text = _bin.title;
-      });
-    });
-
-    _getWebSocketChannel().then((wschannel) {
-      setState(() {
-        channel = wschannel;
-      });
-
-      wschannel.stream.listen((data) {
-        setState(() {
-          message = data;
-          TextSelection previousSelection = controller.selection;
-          controller.text = data;
-          controller.selection = previousSelection; 
-        });
-      });
-    });
+  void _updateContent(String updatedContent) {
+    _channel.sink.add(updatedContent);
   }
 
   Future<WebSocketChannel> _getWebSocketChannel() async {
@@ -122,17 +129,11 @@ class _BinScreenState extends State<BinScreen> {
     final host = await API_HOST;
     final response = await http.put(
       Uri.parse('$HTTP_PROTOCOL://$host/bin/${widget.binId}/title'),
-      body: titleController.text,
+      body: _titleController.text,
     );
 
     if (response.statusCode != 200) {
       throw Exception('Failed to update bin title');
     }
-  }
-
-  @override
-  void dispose() {
-    channel.sink.close();
-    super.dispose();
   }
 }

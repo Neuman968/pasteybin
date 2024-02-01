@@ -9,7 +9,16 @@ import 'dart:convert';
 class NewBinButton extends StatelessWidget {
   const NewBinButton({super.key});
 
-  Future<void> addNewBin(GoRouter router) async {
+  @override
+  Widget build(BuildContext context) {
+    return BinButton(
+        text: 'New Bin',
+        onPressed: () {
+          _addNewBin(GoRouter.of(context));
+        });
+  }
+
+  Future<void> _addNewBin(GoRouter router) async {
     final host = await API_HOST;
     final response = await http.post(Uri.parse('$HTTP_PROTOCOL://$host/bin'));
 
@@ -19,10 +28,5 @@ class NewBinButton extends StatelessWidget {
       router.go('/bin/${bin.id}');
       router.push('/bin/${bin.id}');
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BinButton(text: 'New Bin', onPressed: () { addNewBin(GoRouter.of(context)); });
   }
 }

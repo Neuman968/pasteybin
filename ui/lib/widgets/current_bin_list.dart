@@ -21,21 +21,7 @@ class _CurrentBinListState extends State<CurrentBinList> {
   @override
   void initState() {
     super.initState();
-    fetchBins();
-  }
-
-  Future<void> fetchBins() async {
-    final host = await API_HOST;
-    final response = await http.get(Uri.parse('$HTTP_PROTOCOL://$host/bin'));
-
-    if (response.statusCode == 200) {
-      final List<dynamic> jsonBins = json.decode(response.body);
-      setState(() {
-        bins = jsonBins.map((jsonBin) => Bin.fromJson(jsonBin)).toList();
-      });
-    } else {
-      throw Exception('Failed to load bins');
-    }
+    _fetchBins();
   }
 
   @override
@@ -60,5 +46,19 @@ class _CurrentBinListState extends State<CurrentBinList> {
               style: Theme.of(context).textTheme.titleLarge!.copyWith(),
             ),
           );
+  }
+
+  Future<void> _fetchBins() async {
+    final host = await API_HOST;
+    final response = await http.get(Uri.parse('$HTTP_PROTOCOL://$host/bin'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonBins = json.decode(response.body);
+      setState(() {
+        bins = jsonBins.map((jsonBin) => Bin.fromJson(jsonBin)).toList();
+      });
+    } else {
+      throw Exception('Failed to load bins');
+    }
   }
 }
