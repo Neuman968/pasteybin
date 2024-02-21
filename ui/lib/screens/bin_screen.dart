@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:ui/main.dart';
@@ -21,10 +22,20 @@ class _BinScreenState extends State<BinScreen> {
 
   late WebSocketChannel _channel;
 
-  String _message = 'No data received';
+  // Timer function for sending data to the server.
+  late Timer _timer;
 
-  final TextEditingController _controller = TextEditingController(text: '');
+  // The Websocket message.
+  var _message = '';
 
+  /// true if data has been recieved from the web socket. Prevents data from being overwritten when initialized.
+  var _dataRecieved = false;
+
+  /// Controller for the content of the bin
+  final TextEditingController _contentController =
+      TextEditingController(text: '');
+
+  /// Controller for the title of the bin
   final TextEditingController _titleController =
       TextEditingController(text: '');
 
@@ -32,6 +43,14 @@ class _BinScreenState extends State<BinScreen> {
   void initState() {
     super.initState();
 
+    /// Initialize timer with function to update bin content if bin was initialized and if the content has changed.
+    _timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
+      if (_dataRecieved && _message != _contentController.text) {
+        _channel.sink.add(_contentController.text);
+      }
+    });
+
+    /// Retrieves the bin title.
     _getBin().then((updatedBin) {
       setState(() {
         _bin = updatedBin;
@@ -39,18 +58,21 @@ class _BinScreenState extends State<BinScreen> {
       });
     });
 
+    /// Initialize websocket channel.
     _getWebSocketChannel().then((wschannel) {
       setState(() {
         _channel = wschannel;
       });
 
+      /// Listen to websocket events.
       wschannel.stream.listen((data) {
         setState(() {
           _message = data;
-          TextSelection previousSelection = _controller.selection;
-          _controller.text = data;
-          _controller.selection = previousSelection;
+          TextSelection previousSelection = _contentController.selection;
+          _contentController.text = data;
+          _contentController.selection = previousSelection;
         });
+        _dataRecieved = true;
       });
     });
   }
@@ -58,6 +80,7 @@ class _BinScreenState extends State<BinScreen> {
   @override
   void dispose() {
     _channel.sink.close();
+    _timer.cancel();
     super.dispose();
   }
 
@@ -93,9 +116,9 @@ class _BinScreenState extends State<BinScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: ContentTextField(
-                  content: _message,
-                  onChanged: _updateContent,
-                  controller: _controller,
+                  content: !_dataRecieved ? 'No Message Recieved' : _message,
+                  onChanged: (val) {},
+                  controller: _contentController,
                 ),
               ),
             ),
@@ -105,16 +128,15 @@ class _BinScreenState extends State<BinScreen> {
     );
   }
 
-  void _updateContent(String updatedContent) {
-    _channel.sink.add(updatedContent);
-  }
 
+  /// Returns the Websocket Channel.
   Future<WebSocketChannel> _getWebSocketChannel() async {
     final host = await API_HOST;
     return WebSocketChannel.connect(
         Uri.parse('$WS_PROTOCOL://$host/bin/${widget.binId}/ws'));
   }
 
+  /// Retrieves the current bin from the server.
   Future<Bin> _getBin() async {
     final host = await API_HOST;
     final response =
@@ -125,6 +147,7 @@ class _BinScreenState extends State<BinScreen> {
     throw Exception('Failed to load bin');
   }
 
+  /// Updates the title of the bin based on the state of _titleController
   Future<void> _updateBinTitle() async {
     final host = await API_HOST;
     final response = await http.put(
