@@ -128,7 +128,6 @@ class _BinScreenState extends State<BinScreen> {
     );
   }
 
-
   /// Returns the Websocket Channel.
   Future<WebSocketChannel> _getWebSocketChannel() async {
     final host = await API_HOST;

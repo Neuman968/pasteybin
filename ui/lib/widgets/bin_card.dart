@@ -12,7 +12,9 @@ class BinCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () { onTap(bin); },
+      onTap: () {
+        onTap(bin);
+      },
       child: Card(
         color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.40),
         margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),

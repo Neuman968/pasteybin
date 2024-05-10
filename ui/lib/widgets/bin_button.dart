@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BinButton extends StatelessWidget {
- final String text;
+  final String text;
   final Function()? onPressed;
 
   BinButton({required this.text, required this.onPressed});
@@ -35,4 +35,3 @@ class BinButton extends StatelessWidget {
     );
   }
 }
-
