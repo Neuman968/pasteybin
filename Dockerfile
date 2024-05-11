@@ -21,7 +21,7 @@ FROM gradle:jdk19-jammy
 
 ARG DOCKER_USERNAME=unset
 ARG DOCKER_TOKEN=unset
-ARG DOCKER_IMAGE=neuman314/pasteybin-untagged
+ARG DOCKER_IMAGE=neuman314/pasteybin
 
 COPY ./api .
 
