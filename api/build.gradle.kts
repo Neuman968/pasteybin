@@ -49,7 +49,7 @@ jib {
         extraDirectories {
             paths {
                 path {
-                    setFrom("./static/web")
+                    setFrom("./static")
                     into = "/opt/pasteybin/ui"
                 }
             }
