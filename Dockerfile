@@ -25,7 +25,7 @@ ARG DOCKER_IMAGE=neuman314/pasteybin
 
 COPY ./api .
 
-COPY --from=flutter-deps /app/build/web ./static
+COPY --from=flutter-deps /app/build/web /home/gradle/static
 
 RUN ./gradlew clean jib -Pmultiplatform_build=true \
 	-PDOCKER_IMAGE=$DOCKER_IMAGE \

@@ -76,7 +76,7 @@ jib {
         image = project.findProperty("DOCKER_IMAGE") as String? ?: "neuman314/pasteybin"
         auth {
             username = (project.findProperty("DOCKER_USERNAME") as String?) ?: ""
-            password = (project.findProperty("DOCKER_PASSWORD") as String?) ?: ""
+            password = (project.findProperty("DOCKER_TOKEN") as String?) ?: ""
         }
     }
     container {
