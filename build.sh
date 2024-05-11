@@ -41,7 +41,7 @@ pushd ui
 flutter build web
 popd
 
-cp -R ui/build/web api/static
+cp -R ui/build/web/* api/static/
 
 pushd api
   if [[ "$multiplatform" == "true" ]]; then
