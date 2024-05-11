@@ -25,4 +25,3 @@ jobs:
         build-args: |
           DOCKER_USERNAME=${{secrets.DOCKERHUB_USERNAME }}
           DOCKER_TOKEN=${{secrets.DOCKERHUB_TOKEN }}
-          DOCKER_IMAGE="neuman314/pasteybin"
