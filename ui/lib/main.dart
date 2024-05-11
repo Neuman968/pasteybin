@@ -18,8 +18,9 @@ String WS_PROTOCOL = USE_TLS ? 'wss' : 'ws';
 
 String HTTP_PROTOCOL = USE_TLS ? 'https' : 'http';
 
-Future<String> getOrigin () async {
-  final response = await http.get(Uri.parse('$HTTP_PROTOCOL://${html.window.location.host}/apihost'));
+Future<String> getOrigin() async {
+  final response = await http
+      .get(Uri.parse('$HTTP_PROTOCOL://${html.window.location.host}/apihost'));
   if (response.statusCode == 200 && response.body.startsWith('<') == false) {
     return response.body;
   }

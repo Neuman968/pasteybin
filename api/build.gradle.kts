@@ -2,7 +2,6 @@ val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
 val multiplatform_build: String by project
-
 val isMultiplatformBuild: Boolean = multiplatform_build.lowercase() == "true"
 
 plugins {
@@ -74,7 +73,11 @@ jib {
         }
     }
     to {
-        image = "neuman314/pasteybin"
+        image = project.findProperty("DOCKER_IMAGE") as String? ?: "neuman314/pasteybin"
+        auth {
+            username = (project.findProperty("DOCKER_USERNAME") as String?) ?: ""
+            password = (project.findProperty("DOCKER_PASSWORD") as String?) ?: ""
+        }
     }
     container {
         ports = listOf("8080", "8081")
