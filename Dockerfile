@@ -20,7 +20,7 @@ RUN flutter build web
 FROM gradle:jdk19-jammy
 
 ARG DOCKER_USERNAME=unset
-ARG DOCKER_PASSWORD=unset
+ARG DOCKER_TOKEN=unset
 ARG DOCKER_IMAGE=neuman314/pasteybin-untagged
 
 COPY ./api .
@@ -30,7 +30,7 @@ COPY --from=flutter-deps /app/build/web ./static
 RUN ./gradlew clean jib -Pmultiplatform_build=true \
 	-PDOCKER_IMAGE=$DOCKER_IMAGE \
 	-PDOCKER_USERNAME=$DOCKER_USERNAME \
-	-PDOCKER_PASSWORD=$DOCKER_PASSWORD
+	-PDOCKER_TOKEN=$DOCKER_TOKEN
 
 
 ENTRYPOINT [ "sh" ]
