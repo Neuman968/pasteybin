@@ -23,5 +23,6 @@ jobs:
         push: false
         tags: neuman314/pasteybin-builder:latest
         build-args: |
-          ARG1=${{secrets.DOCKERHUB_USERNAME }}
-          ARG2=${{secrets.DOCKERHUB_TOKEN }}
+          DOCKER_USERNAME=${{secrets.DOCKERHUB_USERNAME }}
+          DOCKER_TOKEN=${{secrets.DOCKERHUB_TOKEN }}
+          DOCKER_IMAGE="neuman314/pasteybin"
